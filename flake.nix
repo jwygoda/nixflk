@@ -6,9 +6,10 @@
       master.url = "nixpkgs/master";
       nixos.url = "nixpkgs/release-20.09";
       home.url = "github:nix-community/home-manager/release-20.09";
+      dotnet.url = "github:nrdxp/dotnet2nix";
     };
 
-  outputs = inputs@{ self, home, nixos, master }:
+  outputs = inputs@{ self, home, nixos, master, dotnet }:
     let
       inherit (builtins) attrNames attrValues readDir;
       inherit (nixos) lib;
@@ -22,7 +23,7 @@
       pkgImport = pkgs:
         import pkgs {
           inherit system;
-          overlays = attrValues self.overlays;
+          overlays = (attrValues self.overlays) ++ [ dotnet.overlay ];
           config = { allowUnfree = true; };
         };
 
