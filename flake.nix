@@ -4,8 +4,8 @@
   inputs =
     {
       master.url = "nixpkgs/master";
-      nixos.url = "nixpkgs/release-20.09";
-      home.url = "github:nix-community/home-manager/release-20.09";
+      nixos.url = "nixpkgs/nixos-unstable";
+      home.url = "github:nix-community/home-manager/master";
       flake-utils.url = "github:numtide/flake-utils";
       devshell.url = "github:numtide/devshell";
     };

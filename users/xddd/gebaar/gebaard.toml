@@ -1,0 +1,19 @@
+[commands.swipe.three]
+left_up = ""
+right_up = ""
+up = "ydotool key ctrl+pagedown"
+left_down = "ydotool key ctrl+w"
+right_down = ""
+down = "ydotool key ctrl+pageup"
+left = "ydotool key alt+left"
+right = "ydotool key alt+right"
+
+[commands.swipe.four]
+left_up = ""
+right_up = ""
+up = "wofi --show drun"
+left_down = ""
+right_down = ""
+down = ""
+left = "swaymsg workspace prev"
+right = "swaymsg workspace next"
