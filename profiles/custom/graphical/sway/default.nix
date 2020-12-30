@@ -16,6 +16,7 @@ in
       gnome3.adwaita-icon-theme
       gnome3.nautilus
       slurp
+      spotify
       swaybg
       swaylock
       swayidle
