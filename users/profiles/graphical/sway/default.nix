@@ -92,6 +92,10 @@ in
       menu = "${wofi} --show drun";
       modifier = "Mod4";
       startup = [
+        {
+          command = "systemctl --user restart kanshi.service";
+          always = true;
+        }
         { command = "${alacritty} -e ${tmux} attach-session -t xddd"; }
         { command = firefox; }
         { command = vscode; }
