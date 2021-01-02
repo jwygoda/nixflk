@@ -14,13 +14,27 @@ let
   inherit (builtins) attrValues removeAttrs;
   inherit (pkgset) osPkgs unstablePkgs;
 
+  unstableModules = [ ];
+
   config = hostName:
     lib.nixosSystem {
       inherit system;
 
+      specialArgs =
+        {
+          unstableModulesPath = "${master}/nixos/modules";
+        };
+
       modules =
         let
           core = self.nixosModules.profiles.core;
+
+          modOverrides = { config, unstableModulesPath, ... }: {
+            disabledModules = unstableModules;
+            imports = map
+              (path: "${unstableModulesPath}/${path}")
+              unstableModules;
+          };
 
           global = {
             home-manager.useGlobalPkgs = true;
@@ -67,7 +81,13 @@ let
             attrValues (removeAttrs self.nixosModules [ "profiles" ]);
 
         in
-        flakeModules ++ [ core global local overrides ] ++ externModules;
+        flakeModules ++ [
+          core
+          global
+          local
+          overrides
+          modOverrides
+        ] ++ externModules;
 
     };
 
