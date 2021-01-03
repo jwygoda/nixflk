@@ -3,6 +3,7 @@
     enable = true;
 
     extraConfig = {
+      merge.tool = "nvim -d";
       pull.rebase = false;
     };
 
