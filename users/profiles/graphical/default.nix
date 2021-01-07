@@ -3,6 +3,7 @@
   imports = [ ./kanshi ./sway ./waybar ./wlsunset ];
 
   programs.alacritty.enable = true;
+  programs.chromium.enable = true;
   programs.firefox = {
     enable = true;
     package = pkgs.firefox-devedition-bin;
