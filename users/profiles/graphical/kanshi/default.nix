@@ -61,6 +61,21 @@
           exec \${pkgs.sway}/bin/swaymsg workspace 3, move workspace to HDMI-A-1
         '';
       };
+      projector2 = {
+        outputs = [
+          {
+            criteria = "Unknown 0x313D 0x00000000";
+            position = "0,1080";
+          }
+          {
+            criteria = "Optoma Corporation Optoma 1080P Q7AF8310397";
+          }
+        ];
+        exec = ''
+          exec \${pkgs.sway}/bin/swaymsg workspace 2, move workspace to HDMI-A-1
+          exec \${pkgs.sway}/bin/swaymsg workspace 3, move workspace to HDMI-A-1
+        '';
+      };
     };
   };
 }
