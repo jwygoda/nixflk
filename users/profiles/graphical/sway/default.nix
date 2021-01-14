@@ -11,7 +11,6 @@ let
   spotify = "${pkgs.spotify}/bin/spotify";
   tmux = "${pkgs.tmux}/bin/tmux";
   waybar = "${pkgs.waybar}/bin/waybar";
-  webtorrent = "${pkgs.webtorrent_desktop}/bin/WebTorrent";
   wl-copy = "${pkgs.wl-clipboard}/bin/wl-copy";
   wl-paste = "${pkgs.wl-clipboard}/bin/wl-paste";
   wofi = "${pkgs.wofi}/bin/wofi";

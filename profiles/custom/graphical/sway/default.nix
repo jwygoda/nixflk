@@ -20,6 +20,7 @@ in
       swaybg
       swaylock
       swayidle
+      webtorrent_desktop
       wf-recorder
       wl-clipboard
     ];
