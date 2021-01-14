@@ -29,6 +29,7 @@ in
         qt5.qtwayland
         alacritty
         volnoti
+        webtorrent_desktop
         wl-clipboard
         (waybar.override { pulseSupport = pulseaudio.enable; })
         grim

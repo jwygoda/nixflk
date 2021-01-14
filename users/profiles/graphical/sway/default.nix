@@ -11,6 +11,7 @@ let
   spotify = "${pkgs.spotify}/bin/spotify";
   tmux = "${pkgs.tmux}/bin/tmux";
   waybar = "${pkgs.waybar}/bin/waybar";
+  webtorrent = "${pkgs.webtorrent_desktop}/bin/WebTorrent";
   wl-copy = "${pkgs.wl-clipboard}/bin/wl-copy";
   wl-paste = "${pkgs.wl-clipboard}/bin/wl-paste";
   wofi = "${pkgs.wofi}/bin/wofi";
@@ -57,6 +58,10 @@ in
           {
             command = "move to workspace 5; workspace 5";
             criteria = { app_id = "celluloid"; };
+          }
+          {
+            command = "move to workspace 5; workspace 5";
+            criteria = { class = "WebTorrent"; };
           }
         ];
       };
