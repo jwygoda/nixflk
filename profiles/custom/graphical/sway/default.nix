@@ -23,6 +23,7 @@ in
       webtorrent_desktop
       wf-recorder
       wl-clipboard
+      vlc
     ];
   };
 }
