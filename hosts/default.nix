@@ -2,9 +2,11 @@
 , lib
 , nixos
 , master
-, pkgset
+, nixos-hardware
+, osPkgs
 , self
 , system
+, unstablePkgs
 , utils
 , externModules
 , ...
@@ -12,7 +14,6 @@
 let
   inherit (utils) recImport;
   inherit (builtins) attrValues removeAttrs;
-  inherit (pkgset) osPkgs unstablePkgs;
 
   unstableModules = [ ];
   addToDisabledModules = [ ];
@@ -24,6 +25,7 @@ let
       specialArgs =
         {
           unstableModulesPath = "${master}/nixos/modules";
+          hardwareModulesPath = "${nixos-hardware}";
         };
 
       modules =
@@ -65,14 +67,6 @@ let
             system.configurationRevision = lib.mkIf (self ? rev) self.rev;
           };
 
-          overrides = {
-            nixpkgs.overlays =
-              let
-                override = import ../pkgs/override.nix unstablePkgs;
-              in
-              [ override ];
-          };
-
           local = import "${toString ./.}/${hostName}.nix";
 
           # Everything in `./modules/list.nix`.
@@ -84,7 +78,6 @@ let
           core
           global
           local
-          overrides
           modOverrides
         ] ++ externModules;
 
