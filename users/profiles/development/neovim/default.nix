@@ -4,6 +4,7 @@
     enable = true;
     withPython3 = true;
     viAlias = true;
+    vimdiffAlias = true;
     extraConfig = ''
       let mapleader = ";"
       " Use spaces instead of tabs
