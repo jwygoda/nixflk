@@ -9,8 +9,6 @@
 
   hardware.bluetooth.enable = true;
 
-  hardware.enableRedistributableFirmware = true;
-
   # better timesync for unstable internet connections
   services.chrony.enable = true;
   services.timesyncd.enable = false;
