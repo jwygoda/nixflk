@@ -1,5 +1,12 @@
 { pkgs, ... }:
+let
+  alacritty = "${pkgs.alacritty}/bin/alacritty";
+in
 {
+  home.sessionVariables = {
+    EDITOR = "vi";
+  };
+
   programs.neovim = {
     enable = true;
     withPython3 = true;
@@ -17,16 +24,28 @@
       set autoread
       " search will be case sensitive if it contains an uppercase letter
       set smartcase
-      " :W sudo saves the file
-      " (useful for handling the permission-denied error)
-      command W w !sudo tee % > /dev/null
+      " clear search by hitting return
+      nnoremap <CR> :noh<CR><CR>
       " Finding files
       nnoremap <silent> <C-f> :Files<CR>
       " Finding in files
+      nnoremap <silent> <Leader>a :Ag<CR>
       nnoremap <silent> <Leader>f :Rg<CR>
+      " https://github.com/rafaqz/ranger.vim/
+      let g:ranger_terminal = '${alacritty} -e'
+      nnoremap <Leader>rr :RangerEdit<cr>
+      nnoremap <Leader>rv :RangerVSplit<cr>
+      nnoremap <Leader>rs :RangerSplit<cr>
+      nnoremap <Leader>rt :RangerTab<cr>
+      nnoremap <Leader>ri :RangerInsert<cr>
+      nnoremap <Leader>ra :RangerAppend<cr>
+      nnoremap <Leader>rc :set operatorfunc=RangerChangeOperator<cr>g@
+      nnoremap <Leader>rd :RangerCD<cr>
+      nnoremap <Leader>rld :RangerLCD<cr>
     '';
     plugins = with pkgs.vimPlugins; [
       fzf-vim
+      ranger-vim
       vim-flake8
       vim-fugitive
       vim-obsession
