@@ -94,6 +94,11 @@ in
     services.udiskie.enable = true;
   };
 
+  # https://github.com/ReimuNotMoe/ydotool/issues/25#issuecomment-535842993
+  services.udev.extraRules = ''
+    KERNEL=="uinput", GROUP="input", MODE="0660", OPTIONS+="static_node=uinput"
+  '';
+
   users.users.xddd = {
     uid = 1000;
     description = name;
