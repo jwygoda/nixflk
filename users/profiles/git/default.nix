@@ -1,9 +1,17 @@
+{ pkgs, ...}:
+let
+  globalGitIgnore = [
+    "Session.vim"
+  ];
+  globalGitIgnoreFile = pkgs.writeText "global.gitignore" (builtins.concatStringsSep "\n" globalGitIgnore);
+in
 {
   programs.git = {
     enable = true;
 
     extraConfig = {
-      merge.tool = "nvim -d";
+      core.excludesfile = "${globalGitIgnoreFile}";
+      merge.tool = "vimdiff";
       pull.rebase = false;
     };
 
