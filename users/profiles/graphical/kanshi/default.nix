@@ -1,13 +1,16 @@
 { pkgs, ... }:
+let
+  device_1 = {
+    criteria = "Unknown 0x2336 0x00000000";
+    scale = 1.5;
+  };
+in
 {
   services.kanshi = {
     enable = true;
     profiles = {
       nomad = {
-        outputs = [{
-          criteria = "Unknown 0x2336 0x00000000";
-          scale = 1.5;
-        }];
+        outputs = [device_1];
       };
       nomad2 = {
         outputs = [{
@@ -48,7 +51,7 @@
       projector = {
         outputs = [
           {
-            criteria = "eDP-1";
+            criteria = "Unknown 0x2336 0x00000000";
             position = "0,1080";
             scale = 1.5;
           }

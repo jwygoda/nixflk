@@ -1,5 +1,5 @@
 { pkgs, ... }: {
-  imports = [ ./python ];
+  imports = [ ./python ./virt ];
 
   environment.systemPackages = with pkgs; [
     git-crypt
