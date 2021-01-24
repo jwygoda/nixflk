@@ -104,6 +104,6 @@ in
     description = name;
     isNormalUser = true;
     hashedPassword = fileContents ../../secrets/xddd;
-    extraGroups = [ "wheel" "input" "networkmanager" ];
+    extraGroups = [ "docker" "input" "networkmanager" "wheel" ];
   };
 }
