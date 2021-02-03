@@ -60,9 +60,7 @@
 
           overlay = import ./pkgs;
 
-          lib = import ./lib {
-            inherit (nixos) lib;
-          };
+          lib = import ./lib { inherit nixos; };
 
           templates.flk.path = ./.;
 
@@ -97,19 +95,16 @@
             pkgImport nixos overlays system;
 
           packages =
-            let
-              packages' = flattenTreeSystem system
-                (genPackages {
-                  inherit self pkgs;
-                });
+            flattenTreeSystem system
+              (genPackages {
+                inherit self pkgs;
+              });
 
-              homeActivationPackages = genHomeActivationPackages
-                self.homeConfigurations;
-            in
-            recursiveUpdate packages' homeActivationPackages;
         in
         {
           inherit packages;
+          hmActivationPackages = genHomeActivationPackages
+            self.homeConfigurations;
 
           devShell = import ./shell {
             inherit pkgs nixos;
