@@ -1,4 +1,4 @@
-{ pkgs, ...}:
+{ pkgs, ... }:
 let
   globalGitIgnore = [
     "Session.vim"
@@ -11,6 +11,7 @@ in
 
     extraConfig = {
       core.excludesfile = "${globalGitIgnoreFile}";
+      credential.helper = "cache";
       merge.tool = "vimdiff";
       pull.rebase = false;
     };
