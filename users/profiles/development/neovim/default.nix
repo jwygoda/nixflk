@@ -31,6 +31,8 @@ in
       " Finding in files
       nnoremap <silent> <Leader>a :Ag<CR>
       nnoremap <silent> <Leader>f :Rg<CR>
+      " Toggle the Tagbar
+      nnoremap <F11> :TagbarToggle<CR>
       " https://github.com/rafaqz/ranger.vim/
       let g:ranger_terminal = '${alacritty} -e'
       nnoremap <Leader>rr :RangerEdit<cr>
@@ -46,10 +48,11 @@ in
     plugins = with pkgs.vimPlugins; [
       fzf-vim
       ranger-vim
+      tagbar
       vim-flake8
       vim-fugitive
       vim-obsession
     ];
-    extraPackages = with pkgs.python3Packages; [ black flake8 ];
+    extraPackages = with pkgs.python3Packages; [ black flake8 pkgs.universal-ctags ];
   };
 }
