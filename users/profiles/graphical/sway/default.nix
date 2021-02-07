@@ -100,7 +100,7 @@ in
           command = "systemctl --user restart kanshi.service";
           always = true;
         }
-        { command = "${alacritty} -e ${tmux} attach-session -t xddd"; }
+        { command = "${alacritty} -e ${tmux} new-session -As xddd"; }
         { command = firefox; }
         { command = vscode; }
         { command = spotify; }
