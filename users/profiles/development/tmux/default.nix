@@ -24,7 +24,8 @@
         plugin = tmuxPlugins.resurrect;
         extraConfig = ''
           set -g @resurrect-strategy-nvim 'session'
-          set -g @resurrect-processes '~nvim -> nvim'
+          # https://github.com/tmux-plugins/tmux-resurrect/issues/108
+          set -g @resurrect-processes '"~nvim->sh -c \"vi -S && exit\""'
         '';
       }
       {
