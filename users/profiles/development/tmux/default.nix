@@ -22,7 +22,10 @@
     plugins = with pkgs; [
       {
         plugin = tmuxPlugins.resurrect;
-        extraConfig = "set -g @resurrect-strategy-nvim 'session'";
+        extraConfig = ''
+          set -g @resurrect-strategy-nvim 'session'
+          set -g @resurrect-processes '~nvim -> nvim'
+        '';
       }
       {
         plugin = tmuxPlugins.continuum;
