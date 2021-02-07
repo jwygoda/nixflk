@@ -15,6 +15,7 @@ in
       imv
       gnome3.adwaita-icon-theme
       gnome3.nautilus
+      signal-desktop
       slurp
       spotify
       swaybg
