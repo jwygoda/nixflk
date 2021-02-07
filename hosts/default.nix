@@ -5,36 +5,36 @@
 , pkgs
 , self
 , system
-, externModules
+, extern
 , ...
 }:
 let
-  inherit (lib.flk) recImport nixosSystemExtended;
+  inherit (lib.flk) recImport nixosSystemExtended defaultImports;
   inherit (builtins) attrValues removeAttrs;
 
-  unstableModules = [ ];
-  addToDisabledModules = [ ];
+  suites = import ../suites { inherit lib; };
 
   config = hostName:
     nixosSystemExtended {
       inherit system;
 
-      specialArgs =
-        {
-          unstableModulesPath = "${master}/nixos/modules";
-          hardware = nixos-hardware.nixosModules;
-        };
+      specialArgs = extern.specialArgs // { inherit suites; };
 
       modules =
         let
-          core = self.nixosModules.profiles.core;
+          core = import ../profiles/core;
 
-          modOverrides = { config, unstableModulesPath, ... }: {
-            disabledModules = unstableModules ++ addToDisabledModules;
-            imports = map
-              (path: "${unstableModulesPath}/${path}")
-              unstableModules;
-          };
+          modOverrides = { config, unstableModulesPath, ... }:
+            let
+              unstable = import ../unstable;
+              inherit (unstable) modules disabledModules;
+            in
+            {
+              disabledModules = modules ++ disabledModules;
+              imports = map
+                (path: "${unstableModulesPath}/${path}")
+                modules;
+            };
 
           global = {
             home-manager.useGlobalPkgs = true;
@@ -53,17 +53,22 @@ let
 
             nix.registry = {
               master.flake = master;
+              nixflk.flake = self;
               nixpkgs.flake = nixos;
             };
 
             system.configurationRevision = lib.mkIf (self ? rev) self.rev;
           };
 
-          local = import "${toString ./.}/${hostName}.nix";
+          local = {
+            require = [
+              (import "${toString ./.}/${hostName}.nix")
+            ];
+          };
 
           # Everything in `./modules/list.nix`.
           flakeModules =
-            attrValues (removeAttrs self.nixosModules [ "profiles" ]);
+            attrValues self.nixosModules;
 
         in
         flakeModules ++ [
@@ -71,7 +76,7 @@ let
           global
           local
           modOverrides
-        ] ++ externModules;
+        ] ++ extern.modules;
 
     };
 

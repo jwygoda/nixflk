@@ -1,13 +1,10 @@
 { config, lib, pkgs, ... }:
 let inherit (lib) fileContents;
-
 in
 {
   nix.package = pkgs.nixFlakes;
 
   nix.systemFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
-
-  imports = [ ../../local/locale.nix ];
 
   environment = {
 

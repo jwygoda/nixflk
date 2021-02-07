@@ -11,11 +11,8 @@ let
   }).config.system.build;
 
   flk = pkgs.writeShellScriptBin "flk" ''
-    system="$(nix eval --impure --expr builtins.currentSystem)"
-    system="${"\${system//\\\"/"}}"
-
     if [[ -z "$1" ]]; then
-      echo "Usage: $(basename $0) [ up | iso {host} | install {host} | {host} [switch|boot|test] | home {host} {user} [switch] ]"
+      echo "Usage: $(basename $0) [ up | get [core|community] {dest} | iso {host} | install {host} | {host} [switch|boot|test] | home {host} {user} [switch] ]"
     elif [[ "$1" == "up" ]]; then
       mkdir -p "$DEVSHELL_ROOT/up"
       hostname="$(hostname)"
@@ -31,9 +28,16 @@ let
     elif [[ "$1" == "install" ]]; then
       sudo nixos-install --flake "$DEVSHELL_ROOT#$2" "${"\${@:3}"}"
     elif [[ "$1" == "home" ]]; then
-      nix build "./#hmActivationPackages.$system.$2.$3"  "${"\${@:4}"}"
+      nix build "./#hmActivationPackages.$2.$3"  "${"\${@:4}"}"
       if [[ "$4" == "switch" ]]; then
         ./result/activate && unlink result
+      fi
+    elif [[ "$1" == "get" ]]; then
+      if [[ "$2" == "core" || "$2" == "community" ]]; then
+        nix flake new -t "github:nrdxp/nixflk/$2" "${"\${3:-flk}"}"
+      else
+        echo "flk get [core|community] {dest}"
+        exit 1
       fi
     else
       sudo nixos-rebuild --flake "$DEVSHELL_ROOT#$1" "${"\${@:2}"}"
@@ -50,8 +54,7 @@ pkgs.devshell.mkShell {
     nixos-install
     nixos-generate-config
     nixos-enter
-    nixos-option
-    pre-commit
+    mdbook
   ];
 
   env = { inherit name; };
@@ -76,7 +79,8 @@ pkgs.devshell.mkShell {
       all_files=($($diff))
 
       # Format staged nix files.
-      ${nixpkgs-fmt}/bin/nixpkgs-fmt "${"\${nix_files[@]}"}"
+      ${nixpkgs-fmt}/bin/nixpkgs-fmt "${"\${nix_files[@]}"}" \
+      && git add "${"\${nix_files[@]}"}"
 
       # check editorconfig
       ${editorconfig-checker}/bin/editorconfig-checker -- "${"\${all_files[@]}"}"

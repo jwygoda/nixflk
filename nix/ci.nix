@@ -1,7 +1,7 @@
 let
   inherit (default.inputs.nixos.lib) recurseIntoAttrs;
 
-  default = (import ../compat).defaultNix;
+  default = (import "${../.}/compat").defaultNix;
 
   packages = import ../default.nix;
 
@@ -11,7 +11,7 @@ let
   };
 
   ci = recurseIntoAttrs {
-    nixos = default.nixosConfigurations.ci.config.system.build.toplevel;
+    nixos = default.nixosConfigurations.NixOS.config.system.build.ci;
   };
 in
 {
