@@ -90,7 +90,7 @@ in
           "XF86MonBrightnessDown" = "exec ${brightnessctl} s 10%-";
           "XF86MonBrightnessUp" = "exec ${brightnessctl} s +10%";
           "Print" = "exec ${grim} Screenshots/$(date +'%Y-%m-%d-%H%M%S_grim.png')";
-          "${modifier}+p" = "exec ${gopass} ls --flat | ${wofi} --show dmenu | ${xargs} --no-run-if-empty -- bash -c '${gopass} show -f $0 password' | head -n 1 | ${wl-copy}";
+          "${modifier}+p" = "exec ${gopass} ls --flat | ${wofi} --show dmenu | ${xargs} --no-run-if-empty -- bash -c '${gopass} show -o $0' | head -n 1 | ${wl-copy}";
           "${modifier}+h" = "exec ${clipman} pick -t wofi";
         };
       menu = "${wofi} --show drun";
