@@ -13,11 +13,14 @@
       setw -g mode-keys vi
       setw -g monitor-activity on
 
-      bind-key | split-window -h
-      bind-key - split-window -v
+      bind-key | split-window -h -c '#{pane_current_path}'
+      bind-key - split-window -v -c '#{pane_current_path}'
 
       # Disable waiting after escape
       set -s escape-time 0
+
+      # https://github.com/neovim/neovim/wiki/FAQ#colors-arent-displayed-correctly
+      # set-option -g default-terminal "screen-256color"
     '';
     plugins = with pkgs; [
       {
