@@ -27,6 +27,7 @@ in
       nmap
       ripgrep
       tealdeer
+      unzip
       utillinux
       whois
     ];
