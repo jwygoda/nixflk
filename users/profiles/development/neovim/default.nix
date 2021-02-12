@@ -49,6 +49,10 @@ in
       nnoremap <Leader>rc :set operatorfunc=RangerChangeOperator<cr>g@
       nnoremap <Leader>rd :RangerCD<cr>
       nnoremap <Leader>rld :RangerLCD<cr>
+      " Enable solarized color scheme
+      syntax enable
+      set background=dark
+      colorscheme solarized
     '';
     plugins = with pkgs.vimPlugins; [
       colors-solarized
