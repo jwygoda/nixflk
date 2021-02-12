@@ -20,8 +20,9 @@
       # Disable waiting after escape
       set -s escape-time 0
 
-      # Support 256 colours
+      # Support RGB in alacritty
       set-option -g default-terminal "tmux-256color"
+      set -ag terminal-overrides ",alacritty:RGB"
     '';
     plugins = with pkgs.tmuxPlugins; [
       gruvbox
