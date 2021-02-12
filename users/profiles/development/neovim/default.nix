@@ -13,17 +13,20 @@ in
     viAlias = true;
     vimdiffAlias = true;
     extraConfig = ''
+      " Enable file type detection
+      filetype on
+      filetype plugin indent on
       let mapleader = ";"
       " Use spaces instead of tabs
       set expandtab
-      " Be smart when using tabs ;)
-      set smarttab
       " display line numbers
       set number relativenumber
       " set to auto read when a file is changed from the outside
       set autoread
       " search will be case sensitive if it contains an uppercase letter
       set smartcase
+      " Stamping
+      nnoremap S diw"0P
       " clear search by hitting return
       nnoremap <CR> :noh<CR><CR>
       " Finding files
@@ -33,6 +36,8 @@ in
       nnoremap <silent> <Leader>f :Rg<CR>
       " Toggle the Tagbar
       nnoremap <F11> :TagbarToggle<CR>
+      " Use deoplete.
+      let g:deoplete#enable_at_startup = 1
       " https://github.com/rafaqz/ranger.vim/
       let g:ranger_terminal = '${alacritty} -e'
       nnoremap <Leader>rr :RangerEdit<cr>
@@ -46,6 +51,9 @@ in
       nnoremap <Leader>rld :RangerLCD<cr>
     '';
     plugins = with pkgs.vimPlugins; [
+      colors-solarized
+      deoplete-nvim
+      deoplete-jedi
       fzf-vim
       ranger-vim
       tagbar
@@ -53,6 +61,7 @@ in
       vim-fugitive
       vim-obsession
     ];
-    extraPackages = with pkgs.python3Packages; [ black flake8 pkgs.universal-ctags ];
+    extraPackages = [ pkgs.universal-ctags ];
+    extraPython3Packages = ps: with ps; [ black flake8 jedi pynvim ];
   };
 }
