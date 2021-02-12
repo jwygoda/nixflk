@@ -8,10 +8,13 @@
       master.url = "nixpkgs/master";
       nixos.url = "nixpkgs/nixos-unstable";
       home.url = "github:nix-community/home-manager/master";
+      home.inputs.nixpkgs.follows = "nixos";
       flake-utils.url = "github:numtide/flake-utils/flatten-tree-system";
       devshell.url = "github:numtide/devshell";
       nixos-hardware.url = "github:nixos/nixos-hardware";
       ci-agent.url = "github:hercules-ci/hercules-ci-agent";
+      ci-agent.inputs.nixos-20_09.follows = "nixos";
+      ci-agent.inputs.nixos-unstable.follows = "master";
     };
 
   outputs =

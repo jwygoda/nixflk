@@ -142,14 +142,6 @@ in
     '';
   };
 
-  security = {
-
-    hideProcessInformation = true;
-
-    protectKernelImage = true;
-
-  };
-
   services.earlyoom.enable = true;
 
   users.mutableUsers = false;
