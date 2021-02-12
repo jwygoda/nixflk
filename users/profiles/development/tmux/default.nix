@@ -22,9 +22,10 @@
       # https://github.com/neovim/neovim/wiki/FAQ#colors-arent-displayed-correctly
       # set-option -g default-terminal "screen-256color"
     '';
-    plugins = with pkgs; [
+    plugins = with pkgs.tmuxPlugins; [
+      tmux-colors-solarized
       {
-        plugin = tmuxPlugins.resurrect;
+        plugin = resurrect;
         extraConfig = ''
           set -g @resurrect-strategy-nvim 'session'
           # https://github.com/tmux-plugins/tmux-resurrect/issues/108
@@ -32,18 +33,18 @@
         '';
       }
       {
-        plugin = tmuxPlugins.continuum;
+        plugin = continuum;
         extraConfig = ''
           set -g @continuum-restore 'on'
           set -g @continuum-save-interval '60' # minutes
         '';
       }
-      tmuxPlugins.copycat
-      tmuxPlugins.open
-      tmuxPlugins.pain-control
-      tmuxPlugins.sessionist
+      copycat
+      open
+      pain-control
+      sessionist
       {
-        plugin = tmuxPlugins.yank;
+        plugin = yank;
         extraConfig = ''
           set -g @custom_copy_command 'wl-copy'
         '';
