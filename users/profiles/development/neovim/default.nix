@@ -51,11 +51,12 @@ in
       nnoremap <Leader>rld :RangerLCD<cr>
       " Enable solarized color scheme
       syntax enable
+      set termguicolors
       set background=dark
-      colorscheme solarized
+      colorscheme gruvbox
     '';
     plugins = with pkgs.vimPlugins; [
-      colors-solarized
+      gruvbox-community
       deoplete-nvim
       deoplete-jedi
       fzf-vim
