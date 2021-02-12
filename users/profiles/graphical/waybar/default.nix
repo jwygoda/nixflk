@@ -6,6 +6,7 @@ in
 {
   programs.waybar = {
     enable = true;
+    package = waybar;
     settings = [
       {
         layer = "top";
