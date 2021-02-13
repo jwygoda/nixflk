@@ -70,8 +70,8 @@ in
       set background=dark
       colorscheme gruvbox
       " flake8
+      let g:flake8_show_in_file=1
       let g:flake8_show_in_gutter=1
-      let g:flake8_show_quickfix=1
     '';
     plugins = with pkgs.vimPlugins; [
       gruvbox-community
