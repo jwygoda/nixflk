@@ -6,7 +6,10 @@ in
     let
       packages = pythonPackages:
         with pythonPackages; [
+          autoflake
+          flake8
           ipython
+          isort
           pip-tools
           ptpython
           requests
