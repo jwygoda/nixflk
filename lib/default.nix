@@ -79,21 +79,21 @@ in
   genPkgs = { self }:
     let inherit (self) inputs;
     in
-    (inputs.flake-utils.lib.eachDefaultSystem
+    (inputs.utils.lib.eachDefaultSystem
       (system:
         let
           extern = import ../extern { inherit inputs; };
-          unstable = pkgImport inputs.master [ ] system;
-          overrides = (import ../unstable).packages;
+          overridePkgs = pkgImport inputs.override [ ] system;
+          overridesOverlay = (import ../overrides).packages;
 
           overlays = [
-            (overrides unstable)
+            (overridesOverlay overridePkgs)
             self.overlay
             (final: prev: {
               lib = (prev.lib or { }) // {
                 inherit (nixos.lib) nixosSystem;
                 flk = self.lib;
-                utils = inputs.flake-utils.lib;
+                utils = inputs.utils.lib;
               };
             })
           ]
@@ -173,7 +173,7 @@ in
       cachixAttrs = { inherit cachix; };
 
       # modules
-      moduleList = import ../modules/list.nix;
+      moduleList = import ../modules/module-list.nix;
       modulesAttrs = pathsToImportedAttrs moduleList;
 
     in
