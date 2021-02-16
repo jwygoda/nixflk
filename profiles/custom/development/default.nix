@@ -4,6 +4,7 @@
   environment.systemPackages = with pkgs; [
     git-crypt
     gopass
+    pre-commit
   ];
 
   documentation.dev.enable = true;
