@@ -6,7 +6,6 @@ in
     let
       packages = pythonPackages:
         with pythonPackages; [
-          autoflake
           flake8
           ipython
           isort
@@ -18,5 +17,8 @@ in
       python = pkgs.python3.withPackages packages;
 
     in
-    [ python ];
+    with pkgs; [
+      autoflake
+      python
+    ];
 }
