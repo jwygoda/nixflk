@@ -15,6 +15,7 @@ in
       stateVersion = "21.03";
 
       packages = with pkgs; [
+        amfora
         dropbox-cli.nautilusExtension
         gebaar-libinput
         ranger
