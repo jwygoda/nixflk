@@ -45,6 +45,8 @@ in
           { "app_id" = "org.gnome.Nautilus"; }
           { "app_id" = "blueberry.py"; }
           { "app_id" = "imv"; }
+          # Google Meet in Firefox
+          { "title" = "Sharing Indicator$"; }
         ];
       };
       window = {
