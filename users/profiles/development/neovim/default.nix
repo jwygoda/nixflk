@@ -46,8 +46,6 @@ in
       nnoremap <silent> <Leader>f :Rg<CR>
       " Toggle the Tagbar
       nnoremap <F11> :TagbarToggle<CR>
-      " Use deoplete.
-      let g:deoplete#enable_at_startup = 1
       " https://github.com/kevinhwang91/rnvimr
       tnoremap <silent> <M-i> <C-\><C-n>:RnvimrResize<CR>
       nnoremap <silent> <M-o> :RnvimrToggle<CR>
@@ -72,12 +70,17 @@ in
       " flake8
       let g:flake8_show_in_file=1
       let g:flake8_show_in_gutter=1
+      " Use deoplete.
+      let g:deoplete#enable_at_startup = 1
+      " Disable completion in jedi-vim, handled in deoplete
+      let g:jedi#completions_enabled = 0
     '';
     plugins = with pkgs.vimPlugins; [
       gruvbox-community
       deoplete-nvim
       deoplete-jedi
       fzf-vim
+      jedi-vim
       rnvimr
       tagbar
       vim-flake8
