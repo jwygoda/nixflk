@@ -1,11 +1,14 @@
 { config, options, pkgs, ... }:
 let
   inherit (config.hardware) pulseaudio;
+  nerdfonts = pkgs.nerdfonts.override {
+    fonts = [ "FiraCode" ];
+  };
 in
 {
   sound.enable = true;
 
-  fonts.fonts = with pkgs; [ fira-code font-awesome ];
+  fonts.fonts = with pkgs; [ fira-code font-awesome nerdfonts ];
 
   programs.sway = {
     enable = true;
