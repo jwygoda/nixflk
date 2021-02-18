@@ -11,7 +11,6 @@ in
 
     extraConfig = {
       core.excludesfile = "${globalGitIgnoreFile}";
-      credential.helper = "cache";
       mergetool.vimdiff.cmd = "vimdiff";
       merge.tool = "vimdiff";
       pull.rebase = false;
