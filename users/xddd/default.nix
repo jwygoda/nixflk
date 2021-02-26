@@ -19,6 +19,7 @@ in
         dropbox-cli.nautilusExtension
         gebaar-libinput
         ranger
+        sidequest
         wofi
         ydotool
       ];
@@ -34,8 +35,6 @@ in
         };
       };
     };
-
-    # nixpkgs.config.allowUnfree = true;
 
     programs.bash.enable = true;
 
@@ -95,16 +94,20 @@ in
     services.udiskie.enable = true;
   };
 
+  boot.supportedFilesystems = [ "ntfs" ];
+
   # https://github.com/ReimuNotMoe/ydotool/issues/25#issuecomment-535842993
   services.udev.extraRules = ''
     KERNEL=="uinput", GROUP="input", MODE="0660", OPTIONS+="static_node=uinput"
   '';
+
+  programs.adb.enable = true;
 
   users.users.xddd = {
     uid = 1000;
     description = name;
     isNormalUser = true;
     hashedPassword = fileContents ../../secrets/xddd;
-    extraGroups = [ "docker" "input" "networkmanager" "wheel" ];
+    extraGroups = [ "adbusers" "docker" "input" "networkmanager" "wheel" ];
   };
 }
