@@ -1,6 +1,8 @@
+#!/usr/bin/env bash
+
 [[ -d "$DEVSHELL_ROOT" ]] ||
   {
-    echo "This script must be run from nixflk's devshell" >&2
+    echo "This script must be run from devos's devshell" >&2
     exit 1
   }
 
@@ -15,12 +17,12 @@ usage () {
 
   printf "  %-30s %s\n\n" \
   "up" "Generate $DEVSHELL_ROOT/hosts/up-$HOSTNAME.nix" \
-  "update" "Update and commit the lock file" \
-  "get [core|community] DEST" "Copy the desired template to DEST" \
+  "update [INPUT]" "Update and commit the lock file" \
+  "get (core|community) [DEST]" "Copy the desired template to DEST" \
   "iso HOST" "Generate an ISO image of HOST" \
   "install HOST [ARGS]" "Shortcut for nixos-install" \
   "home HOST USER [switch]" "Home-manager config of USER from HOST" \
-  "HOST [switch|boot|test]" "Shortcut for nixos-rebuild"
+  "HOST (switch|boot|test)" "Shortcut for nixos-rebuild"
 }
 
 case "$1" in
@@ -33,8 +35,13 @@ case "$1" in
 
     nixos-generate-config --dir "$DEVSHELL_ROOT/up/$HOSTNAME"
 
-    printf "{ imports = [ ../up/$HOSTNAME/configuration.nix ]; }" \
-      > "$DEVSHELL_ROOT/hosts/up-$HOSTNAME.nix"
+    printf "%s\n" \
+      "{ suites, ... }:" \
+      "{" \
+      "  imports = [" \
+      "    ../up/$HOSTNAME/configuration.nix" \
+      "  ] ++ suites.core;" \
+      "}" > "$DEVSHELL_ROOT/hosts/up-$HOSTNAME.nix"
 
     git add -f \
       "$DEVSHELL_ROOT/up/$HOSTNAME" \
@@ -42,14 +49,18 @@ case "$1" in
     ;;
 
   "update")
-    nix flake update --recreate-lock-file --commit-lock-file "$DEVSHELL_ROOT"
+    if [[ -n "$2" ]]; then
+      nix flake update --update-input "$2" --commit-lock-file "$DEVSHELL_ROOT"
+    else
+      nix flake update --recreate-lock-file --commit-lock-file "$DEVSHELL_ROOT"
+    fi
     ;;
 
   "get")
     if [[ "$2" == "core" || "$2" == "community" ]]; then
-      nix flake new -t "github:nrdxp/nixflk/$2" "${3:-flk}"
+      nix flake new -t "github:divnix/devos/$2" "${3:-flk}"
     else
-      echo "flk get [core|community] {dest}"
+      echo "flk get (core|community) [DEST]"
       exit 1
     fi
     ;;

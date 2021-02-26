@@ -14,27 +14,36 @@
       ci-agent.inputs.nixos-20_09.follows = "nixos";
       ci-agent.inputs.nixos-unstable.follows = "override";
       ci-agent.inputs.flake-compat.follows = "flake-compat";
-      flake-compat.url = "github:edolstra/flake-compat";
+      deploy.url = "github:serokell/deploy-rs";
+      deploy.inputs.utils.follows = "utils";
+      deploy.inputs.naersk.follows = "naersk";
+      deploy.inputs.nixpkgs.follows = "override";
+      deploy.inputs.flake-compat.follows = "flake-compat";
+      naersk.url = "github:nmattia/naersk";
+      naersk.inputs.nixpkgs.follows = "override";
+      flake-compat.url = "github:BBBSnowball/flake-compat/pr-1";
       flake-compat.flake = false;
+      srcs.url = "path:./pkgs";
     };
 
   outputs =
-    inputs@{ self
-    , ci-agent
+    inputs@{ ci-agent
+    , deploy
+    , devshell
     , home
     , nixos
-    , override
-    , utils
-    , nur
-    , devshell
     , nixos-hardware
+    , nur
+    , override
+    , self
+    , utils
     , ...
     }:
     let
       inherit (utils.lib) eachDefaultSystem flattenTreeSystem;
       inherit (nixos.lib) recursiveUpdate;
       inherit (self.lib) overlays nixosModules genPackages genPkgs
-        genHomeActivationPackages;
+        genHomeActivationPackages mkNodes;
 
       extern = import ./extern { inherit inputs; };
 
@@ -63,6 +72,12 @@
           templates.flk.description = "flk template";
 
           defaultTemplate = self.templates.flk;
+
+          deploy.nodes = mkNodes deploy self.nixosConfigurations;
+
+          checks = builtins.mapAttrs
+            (system: deployLib: deployLib.deployChecks self.deploy)
+            deploy.lib;
         };
 
       systemOutputs = eachDefaultSystem (system:

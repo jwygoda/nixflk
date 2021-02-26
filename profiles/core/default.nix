@@ -12,6 +12,7 @@ in
       binutils
       coreutils
       curl
+      deploy-rs
       direnv
       dnsutils
       dosfstools
@@ -22,8 +23,8 @@ in
       iputils
       jq
       manix
-      nix-index
       moreutils
+      nix-index
       nmap
       ripgrep
       tealdeer
@@ -138,10 +139,10 @@ in
     trustedUsers = [ "root" "@wheel" ];
 
     extraOptions = ''
-      experimental-features = nix-command flakes ca-references
       min-free = 536870912
       keep-outputs = true
       keep-derivations = true
+      fallback = true
     '';
 
   };
