@@ -83,9 +83,11 @@ in
       jedi-vim
       rnvimr
       tagbar
+      vim-airline
       vim-flake8
       vim-fugitive
       vim-obsession
+      vim-yaml
     ];
     extraPackages = with pkgs; [ pkgs.python3Packages.flake8 universal-ctags ];
     extraPython3Packages = ps: with ps; [ black jedi pynvim ];
